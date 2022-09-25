@@ -44,8 +44,5 @@ DismissibleTile(
     rtlOverlay: const Text('Delete'),
     rtlOverlayDismissed: const Text('Deleted'),
     child: // your child
-   ),
-  ),
- ),
-),
+);
 ```
