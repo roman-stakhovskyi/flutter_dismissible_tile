@@ -18,7 +18,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  flutter_dismissible_tile: ^1.0.0
+  flutter_dismissible_tile: any
 ```
 
 Import it:
