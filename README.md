@@ -9,7 +9,7 @@
 
 The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dismissible-class.html). Without any up, down or vertical swipe.
 
-<img src="https://raw.githubusercontent.com/roman-stakhovskyi/swipeable_tile/main/assets/demo.gif"  width="400"/>
+<img src="https://raw.githubusercontent.com/roman-stakhovskyi/flutter_dismissible_tile/master/assets/demo.gif"  width="400"/>
 
 ## Getting Started
 
