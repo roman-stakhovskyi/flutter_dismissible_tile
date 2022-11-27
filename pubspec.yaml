@@ -1,6 +1,6 @@
 name: flutter_dismissible_tile
 description: A package to dismiss a tile with animated customizable background.
-version: 1.0.1+1
+version: 1.0.2
 homepage: https://github.com/roman-stakhovskyi/flutter_dismissible_tile
 
 environment:

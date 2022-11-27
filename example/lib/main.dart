@@ -17,14 +17,9 @@ class App extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,10 +84,9 @@ class _HomePageState extends State<HomePage> {
 
 class _SlidableOverlay extends StatelessWidget {
   const _SlidableOverlay({
-    Key? key,
     required this.title,
     required this.iconData,
-  }) : super(key: key);
+  });
 
   final String title;
   final IconData iconData;
@@ -126,9 +120,8 @@ class _SlidableOverlay extends StatelessWidget {
 
 class _DismissedOverlay extends StatelessWidget {
   const _DismissedOverlay({
-    Key? key,
     required this.title,
-  }) : super(key: key);
+  });
 
   final String title;
 
