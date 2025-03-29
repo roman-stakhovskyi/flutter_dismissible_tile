@@ -1,6 +1,6 @@
 gradle-wrapper.jar
 /.gradle
-/android/app/.cxx
+/app/.cxx
 /captures/
 /gradlew
 /gradlew.bat
