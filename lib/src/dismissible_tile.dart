@@ -234,19 +234,13 @@ class DismissibleTile extends StatefulWidget {
       );
 
   @override
-  State<StatefulWidget> createState() => _DismissibleTileState();
+  State<StatefulWidget> createState() => DismissibleTileState();
 }
 
 enum _FlingGestureKind { none, forward, reverse }
 
-class _DismissibleTileState extends State<DismissibleTile>
+class DismissibleTileState extends State<DismissibleTile>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  @override
-  void initState() {
-    super.initState();
-    _updateMoveAnimation();
-  }
-
   late final _moveController = AnimationController(
     vsync: this,
     duration: widget.movementDuration,
@@ -274,6 +268,12 @@ class _DismissibleTileState extends State<DismissibleTile>
   @override
   bool get wantKeepAlive =>
       _moveController.isAnimating || _resizeController.isAnimating;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateMoveAnimation();
+  }
 
   @override
   void dispose() {
@@ -345,6 +345,25 @@ class _DismissibleTileState extends State<DismissibleTile>
     if (!_moveController.isAnimating) {
       _moveController.value = _dragExtent.abs() / _overallDragAxisExtent;
     }
+  }
+
+  Future<void> dismiss({
+    DismissibleTileDirection direction = DismissibleTileDirection.rightToLeft,
+  }) async {
+    // If animations are running or we're confirming a dismissal, exit early
+    if (_moveController.isAnimating ||
+        _resizeController.isAnimating ||
+        _confirming) {
+      return;
+    }
+
+    _dragUnderway = true;
+    _dragExtent = direction == DismissibleTileDirection.leftToRight ? 1 : -1;
+    setState(_updateMoveAnimation);
+
+    await _moveController.forward();
+    _dragUnderway = false;
+    await _handleMoveCompleted();
   }
 
   void _handleDismissUpdateValueChanged() {
@@ -450,11 +469,17 @@ class _DismissibleTileState extends State<DismissibleTile>
       await _moveController.reverse();
       return;
     }
+
+    // Reset _sizePriorToCollapse before confirmation to ensure clean state
+    _sizePriorToCollapse = null;
+
     final isConfirmed = await _confirmStartResizeAnimation();
     if (!mounted) return;
+
     if (isConfirmed) {
       widget.onDismissConfirmed?.call();
       setState(() {});
+
       if (widget.delayBeforeResize != null) {
         _confirming = true;
         await Future.delayed(widget.delayBeforeResize!, () {});
@@ -480,7 +505,6 @@ class _DismissibleTileState extends State<DismissibleTile>
 
   void _startResizeAnimation() {
     assert(_moveController.isCompleted);
-    assert(_sizePriorToCollapse == null);
     if (widget.resizeDuration == null) {
       widget.onDismissed?.call(_dismissDirection);
     } else {

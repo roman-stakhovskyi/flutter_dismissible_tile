@@ -39,7 +39,7 @@ class DismissibleOverlay extends StatelessWidget {
     return LayoutBuilder(
       builder: (_, constraints) {
         final maxWidth = constraints.maxWidth;
-        final x = maxWidth > 0 ? 1.0 + indent / maxWidth * 10 : 1.0;
+        final x = maxWidth > 0 ? (1 + indent / maxWidth * 10) : 1.0;
         final alignAnimation = _getAlignmentAnimation(x);
         final content = AnimatedBuilder(
           animation: alignAnimation,
